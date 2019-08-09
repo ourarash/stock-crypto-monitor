@@ -34,11 +34,12 @@ async function getGlobalMarketData() {
 //-----------------------------------------------------------------------------
 async function getStockPricesFromYahoo() {
   log.info("Getting Stock prices from Yahoo...");
-
-  for (stock of defines.Globals.options.stocksOfInteres) {
+  for (stock of defines.Globals.options.stocksOfInterest) {
     try {
       let res = await yahoo.lookup(stock);
+      
       defines.Globals.stockPrices[stock] = res;
+      await utility_functions.sleep(100);
     } catch (error) {
       log.error(error);
     }
@@ -289,7 +290,7 @@ async function printStatus() {
   let notificationOutputRaw = "";
 
   let stockAndCryptosOfInterest = defines.Globals.options.cryptosOfInterest.concat(
-    defines.Globals.options.stocksOfInteres
+    defines.Globals.options.stocksOfInterest
   );
   for (let i = 0; i < stockAndCryptosOfInterest.length; i++) {
     const c = stockAndCryptosOfInterest[i];
@@ -428,4 +429,3 @@ module.exports = function(options = {}) {
   };
 };
 
-getStockPricesFromYahoo();

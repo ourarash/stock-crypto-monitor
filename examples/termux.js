@@ -55,7 +55,8 @@ async function updateNotification() {
   if (
     
     g_notificationOutput &&
-    g_mktCapFormatted
+    g_mktCapFormatted &&
+    api.hasTermux
   ) {
     api
       .notification()
@@ -78,6 +79,7 @@ let options = {
 };
 
 //-----------------------------------------------------------------------------
+
 const argv = process.argv.slice(2);
 let cliArgs = mri(argv);
 let optionKeys = Object.keys(Globals.options);
@@ -91,6 +93,10 @@ optionKeys.forEach(e => {
 
 if (utility_functions.isString(options.cryptosOfInterest)) {
   options.cryptosOfInterest = options.cryptosOfInterest.split(",");
+}
+
+if (utility_functions.isString(options.stocksOfInterest)) {
+  options.stocksOfInterest = options.stocksOfInterest.split(",");
 }
 
 g_notification_id = utility_functions.hashCode(

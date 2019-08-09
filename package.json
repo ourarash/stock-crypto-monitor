@@ -2,7 +2,7 @@
   "name": "crypto-price-monitor",
   "version": "1.0.4",
   "description": "Continuously monitor cryptocurrency and stock prices",
-  "main": "examples/demo.js",
+  "main": "examples/termux.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

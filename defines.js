@@ -5,10 +5,11 @@ Globals = {
   options: {
     loopForEver: true,
     getCoinGeckoPrices: true,
+    getStockPricesFromYahoo:true,
     initialCallback: null,
     updateValuesCallback: null,
     cryptosOfInterest : [`BTC`, `ETH`, `LTC`],
-    stocksOfInteres: ['AAPL', 'GOOGL'],
+    stocksOfInterest: ['AAPL', 'GOOGL'],
     updateIntervalInSeconds: 10,
     printIntervalInSeconds:5,
     // control
