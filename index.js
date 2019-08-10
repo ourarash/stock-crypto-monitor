@@ -306,7 +306,7 @@ async function printStatus() {
     notificationOutput += `${c.bright}: ${btcPriceFormatted}`;
     notificationOutputRaw += `${c}: ${btcPriceFormatted}`;
     linLength+=`${c}: ${btcPriceFormatted}`.length;
-    if (linLength >  20) {
+    if (linLength >  30) {
       lineCounter++;
       linLength=0;
       notificationOutputRaw += "\n";
