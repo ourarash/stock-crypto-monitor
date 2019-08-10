@@ -306,15 +306,17 @@ async function printStatus() {
     notificationOutput += `${c.bright}: ${btcPriceFormatted}`;
     notificationOutputRaw += `${c}: ${btcPriceFormatted}`;
     linLength+=`${c}: ${btcPriceFormatted}`.length;
+    
+    if (i < stockAndCryptosOfInterest.length - 1) {
+      notificationOutput += `, `;
+      notificationOutputRaw += `, `;
+    }
+
     if (linLength >  30) {
       lineCounter++;
       linLength=0;
       notificationOutputRaw += "\n";
       notificationOutput += "\n";
-    }
-    if (i < stockAndCryptosOfInterest.length - 1) {
-      notificationOutput += `, `;
-      notificationOutputRaw += `, `;
     }
   }
   // defines.Globals.options.cryptosOfInterest.forEach((c, i) => {
