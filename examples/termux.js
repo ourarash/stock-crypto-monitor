@@ -1,6 +1,6 @@
 /**
  * 
- * crypto-price-monitor: Termux example
+ * stock-cryptoa-monitor: Termux example
  * Continuously monitor cryptocurrency prices
  * Written by Ari Saif
  * Should be run inside [Termux](https://termux.com/) in Android using GPS

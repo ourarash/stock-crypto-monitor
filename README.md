@@ -36,8 +36,9 @@ npm install stock-crypto-monitor --save
 # Usage
 
 ```javascript
-var crypto_price_monitor = require("stock-crypto-monitor")({
-  cryptosOfInterest: "BTC,ETH,LTC"
+var stock_crypto_monitor = require("stock-crypto-monitor")({
+  cryptosOfInterest: "BTC,ETH,LTC",
+  stocksOfInterest: ["AAPL", "GOOGL"]
 });
-crypto_price_monitor.start();
+stock_crypto_monitor.start();
 ```

@@ -1,5 +1,5 @@
 /**
- * crypto-price-monitor: Continuously monitor cryptocurrency prices
+ * stock-cryptoa-monitor: Continuously monitor cryptocurrency prices
  * Written by Ari Saif
  */
 
@@ -37,7 +37,7 @@ async function getStockPricesFromYahoo() {
   for (stock of defines.Globals.options.stocksOfInterest) {
     try {
       let res = await yahoo.lookup(stock);
-      
+
       defines.Globals.stockPrices[stock] = res;
       await utility_functions.sleep(100);
     } catch (error) {
@@ -292,6 +292,9 @@ async function printStatus() {
   let stockAndCryptosOfInterest = defines.Globals.options.cryptosOfInterest.concat(
     defines.Globals.options.stocksOfInterest
   );
+
+  let lineCounter = 1;
+  let linLength = 0 ;
   for (let i = 0; i < stockAndCryptosOfInterest.length; i++) {
     const c = stockAndCryptosOfInterest[i];
 
@@ -302,6 +305,13 @@ async function printStatus() {
 
     notificationOutput += `${c.bright}: ${btcPriceFormatted}`;
     notificationOutputRaw += `${c}: ${btcPriceFormatted}`;
+    linLength+=`${c}: ${btcPriceFormatted}`.length;
+    if (linLength >  20) {
+      lineCounter++;
+      linLength=0;
+      notificationOutputRaw += "\n";
+      notificationOutput += "\n";
+    }
     if (i < stockAndCryptosOfInterest.length - 1) {
       notificationOutput += `, `;
       notificationOutputRaw += `, `;
@@ -391,7 +401,7 @@ async function main() {
 
 //-----------------------------------------------------------------------------
 /**
- * Starts geofencing
+ * Start
  */
 async function start() {
   let cryptosOfInterest = defines.Globals.options.cryptosOfInterest.map(e => {
@@ -428,4 +438,3 @@ module.exports = function(options = {}) {
     start: start
   };
 };
-

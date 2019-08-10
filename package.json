@@ -1,20 +1,23 @@
 {
-  "name": "crypto-price-monitor",
-  "version": "1.0.4",
-  "description": "Continuously monitor cryptocurrency and stock prices",
+  "name": "stock-cryptoa-monitor",
+  "version": "1.0.0",
+  "description": "Continuously monitors cryptocurrency and stock prices",
   "main": "examples/termux.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ourarash/crypto-price-monitor.git"
+    "url": "git+https://github.com/ourarash/stock-cryptoa-monitor.git"
   },
   "keywords": [
     "crypto",
     "cryptocurrency",
     "bitcoin",
     "btc",
+    "stock",
+    "exchange",
+    "trading",
     "termux",
     "android",
     "notifications"
@@ -22,13 +25,14 @@
   "author": "Ari Saif",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ourarash/crypto-price-monitor/issues"
+    "url": "https://github.com/ourarash/stock-cryptoa-monitor/issues"
   },
-  "homepage": "https://github.com/ourarash/crypto-price-monitor#readme",
+  "homepage": "https://github.com/ourarash/stock-cryptoa-monitor#readme",
   "dependencies": {
     "ansicolor": "^1.1.92",
     "coingecko-api": "^1.0.5",
     "currency-formatter": "^1.5.4",
+    "log-with-statusbar": "^1.1.18",
     "moment": "^2.24.0",
     "mri": "^1.1.4",
     "numeral": "^2.0.6",
@@ -37,7 +41,5 @@
     "termux": "^1.1.0",
     "yahoo-stocks": "^2.0.4"
   },
-  "optionalDependencies": {
-    "log-with-statusbar": "^1.1.15"
-  }
+  "optionalDependencies": {}
 }
