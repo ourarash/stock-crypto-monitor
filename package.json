@@ -1,6 +1,6 @@
 {
   "name": "stock-cryptoa-monitor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Continuously monitors cryptocurrency and stock prices",
   "main": "examples/termux.js",
   "scripts": {
