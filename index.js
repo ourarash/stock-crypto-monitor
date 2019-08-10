@@ -41,7 +41,7 @@ async function getStockPricesFromYahoo() {
       defines.Globals.stockPrices[stock] = res;
       await utility_functions.sleep(100);
     } catch (error) {
-      log.error(error);
+      log.error(`Wasn't able to lookup ${stock}: `, error);
     }
   }
   log.info("Done getting Stock prices from Yahoo!");
@@ -189,7 +189,9 @@ function getPrice(c) {
       defines.Globals.cryptoPrices[c.toUpperCase()].current_price
     ); // coinGecko;
   } else {
-    return defines.Globals.stockPrices[c.toUpperCase()].currentPrice;
+    return defines.Globals.stockPrices[c.toUpperCase()]
+      ? defines.Globals.stockPrices[c.toUpperCase()].currentPrice
+      : 0;
   }
 }
 //-----------------------------------------------------------------------------
@@ -264,9 +266,10 @@ async function printStatus() {
   };
 
   // Calculate marketcap
-  let mktCapFormatted = numeral(
-    defines.Globals.globalData.total_market_cap.usd
-  ).format("0.00 a");
+  let mktCapFormatted = defines.Globals.globalData.total_market_cap
+    ? numeral(defines.Globals.globalData.total_market_cap.usd).format("0.00 a")
+    : "0 ";
+  console.log("mktCapFormatted: ", JSON.stringify(mktCapFormatted));
   let pricePostFix = /\S+\s+(.*)/.exec(mktCapFormatted);
 
   pricePostFix = pricePostFix[1].toUpperCase();
@@ -294,7 +297,7 @@ async function printStatus() {
   );
 
   let lineCounter = 1;
-  let linLength = 0 ;
+  let linLength = 0;
   for (let i = 0; i < stockAndCryptosOfInterest.length; i++) {
     const c = stockAndCryptosOfInterest[i];
 
@@ -305,16 +308,16 @@ async function printStatus() {
 
     notificationOutput += `${c.bright}: ${btcPriceFormatted}`;
     notificationOutputRaw += `${c}: ${btcPriceFormatted}`;
-    linLength+=`${c}: ${btcPriceFormatted}`.length;
-    
+    linLength += `${c}: ${btcPriceFormatted}`.length;
+
     if (i < stockAndCryptosOfInterest.length - 1) {
       notificationOutput += `, `;
       notificationOutputRaw += `, `;
     }
 
-    if (linLength >  30) {
+    if (linLength > 30) {
       lineCounter++;
-      linLength=0;
+      linLength = 0;
       notificationOutputRaw += "\n";
       notificationOutput += "\n";
     }
@@ -365,16 +368,14 @@ async function main() {
   if (defines.Globals.options.initialCallback) {
     defines.Globals.options.initialCallback();
   }
-
+  let promises = [];
   if (defines.Globals.options.getCoinGeckoPrices) {
-    let promises = [];
     promises.push(getAllPriceFullCoinGecko());
     promises.push(getGlobalMarketData());
-    await Promise.all(promises);
   }
 
   if (defines.Globals.options.getStockPricesFromYahoo) {
-    await getStockPricesFromYahoo();
+    promises.push(getStockPricesFromYahoo());
   }
 
   defines.Globals.intervals.printInterval = setInterval(() => {
@@ -385,9 +386,13 @@ async function main() {
 
   defines.Globals.intervals.coingGeckoUpdateInterval = setInterval(() => {
     if (defines.Globals.options.enable) {
-      getAllPriceFullCoinGecko();
-      getGlobalMarketData();
-      getStockPricesFromYahoo();
+      if (defines.Globals.options.getCoinGeckoPrices) {
+        getAllPriceFullCoinGecko();
+        getGlobalMarketData();
+      }
+      if (defines.Globals.options.getStockPricesFromYahoo) {
+        getStockPricesFromYahoo();
+      }
     }
   }, defines.Globals.options.updateIntervalInSeconds * 1000);
 
@@ -399,6 +404,8 @@ async function main() {
       }
     }, 0.1 * 1000);
   }
+
+  await Promise.all(promises);
 }
 
 //-----------------------------------------------------------------------------
