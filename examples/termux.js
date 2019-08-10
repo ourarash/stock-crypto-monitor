@@ -72,12 +72,10 @@ async function updateNotification() {
 
 //-----------------------------------------------------------------------------
 let options = {
-  updateInterval: 5,
-  loopForever: true,
+  updateInterval: 10,
   updateValuesCallback: updateValuesCallback,
   initialCallback: initialCallback
 };
-
 //-----------------------------------------------------------------------------
 
 const argv = process.argv.slice(2);

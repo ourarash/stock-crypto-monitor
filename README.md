@@ -3,18 +3,20 @@
 Continuously monitors cryptocurrency and stock prices and the total market cap.
 Currently, the prices are fetched from CoinGecko and Yahoo Finance.
 
-This module is ideal for [Termux](https://termux.com/) in Android to continuously
+This is a general purpose package, but it is ideal for [Termux](https://termux.com/) in Android to continuously
 show the price of cryptocurrencies in the notification area.
 See [examples/termux.js](examples/termux.js)
 
 [![NPM](https://badge.fury.io/js/stock-crypto-monitor.svg)](https://www.npmjs.com/package/stock-crypto-monitor)
-[![NPM Downloads][downloadst-image]][downloads-url]
+
+<!-- [![NPM Downloads][downloadst-image]][downloads-url] -->
 
 [downloads-image]: https://img.shields.io/npm/dm/stock-crypto-monitor.svg
 [downloadst-image]: https://img.shields.io/npm/dt/stock-crypto-monitor.svg
 [downloads-url]: https://npmjs.org/package/stock-crypto-monitor
 
 - [x] Supports more than 5000 cryptocurrencies
+- [x] Supports all stock tickers on Yahoo Finance
 - [x] Continuously displays the prices and total market cap
 - [x] Accepts callbacks for each time the price is updated
 
@@ -41,4 +43,19 @@ var stock_crypto_monitor = require("stock-crypto-monitor")({
   stocksOfInterest: ["AAPL", "GOOGL"]
 });
 stock_crypto_monitor.start();
+```
+
+# Other options
+
+```javascript
+var stock_crypto_monitor = require("stock-crypto-monitor")({
+  getCoinGeckoPrices: true,
+  getStockPricesFromYahoo: true,
+  initialCallback: null, // Function called in the beginning
+  updateValuesCallback: null, // Function called at each updated
+  cryptosOfInterest: [`BTC`, `ETH`, `LTC`],
+  stocksOfInterest: ["AAPL", "GOOGL"],
+  updateIntervalInSeconds: 10,
+  printIntervalInSeconds: 5
+});
 ```

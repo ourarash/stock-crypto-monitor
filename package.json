@@ -1,8 +1,8 @@
 {
   "name": "stock-crypto-monitor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Continuously monitors cryptocurrency and stock prices",
-  "main": "examples/termux.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

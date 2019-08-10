@@ -3,11 +3,10 @@ require("ansicolor").nice;
 
 Globals = {
   options: {
-    loopForEver: true,
     getCoinGeckoPrices: true,
     getStockPricesFromYahoo:true,
-    initialCallback: null,
-    updateValuesCallback: null,
+    initialCallback: null,  // Function called in the beginning
+    updateValuesCallback: null, // Function called at each updated
     cryptosOfInterest : [`BTC`, `ETH`, `LTC`],
     stocksOfInterest: ['AAPL', 'GOOGL'],
     updateIntervalInSeconds: 10,
