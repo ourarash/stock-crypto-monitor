@@ -181,7 +181,11 @@ async function getAllPriceFullCoinGecko() {
   defines.Globals.priceUpdateTimestamp = moment().valueOf();
   log.info("Updated CoinGecko prices!");
 }
-
+//-----------------------------------------------------------------------------
+/**
+ * Returns the price of a ticker (stock or crypto)
+ * @param {String} c
+ */
 function getPrice(c) {
   if (Object.keys(defines.Globals.cryptoPrices).includes(c)) {
     return (
@@ -378,11 +382,13 @@ async function main() {
     promises.push(getStockPricesFromYahoo());
   }
 
-  defines.Globals.intervals.printInterval = setInterval(() => {
-    if (defines.Globals.options.enable) {
-      printStatus();
-    }
-  }, defines.Globals.options.printIntervalInSeconds * 1000);
+  if (defines.Globals.options.printStatus) {
+    defines.Globals.intervals.printInterval = setInterval(() => {
+      if (defines.Globals.options.enable) {
+        printStatus();
+      }
+    }, defines.Globals.options.printIntervalInSeconds * 1000);
+  }
 
   defines.Globals.intervals.coingGeckoUpdateInterval = setInterval(() => {
     if (defines.Globals.options.enable) {
@@ -396,7 +402,7 @@ async function main() {
     }
   }, defines.Globals.options.updateIntervalInSeconds * 1000);
 
-  if (!api.hasTermux) {
+  if (!api.hasTermux && defines.Globals.options.updateStatusBar) {
     updateStatusBar();
     defines.Globals.intervals.statusBarTextInterval = setInterval(() => {
       if (defines.Globals.options.enable) {
@@ -425,6 +431,8 @@ async function start() {
 
   defines.Globals.options.enable = true;
   await main();
+
+  log.info("Done requesting prices and setting intervals.");
 }
 //-----------------------------------------------------------------------------
 /**
@@ -444,6 +452,8 @@ module.exports = function(options = {}) {
   Object.assign(defines.Globals.options, options);
   return {
     stop: stop,
-    start: start
+    start: start,
+    getPrice: getPrice,
+    log: log
   };
 };

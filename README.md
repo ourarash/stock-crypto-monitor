@@ -37,12 +37,34 @@ npm install stock-crypto-monitor --save
 
 # Usage
 
+## Simple
+
 ```javascript
-var stock_crypto_monitor = require("stock-crypto-monitor")({
+const stock_crypto_monitor = require("stock-crypto-monitor")({
   cryptosOfInterest: "BTC,ETH,LTC",
   stocksOfInterest: ["AAPL", "GOOGL"]
 });
 stock_crypto_monitor.start();
+```
+
+## Query prices
+
+```javascript
+const crypto_price_checker = require("../index.js")({
+  cryptosOfInterest: ["BTC", "ETH", "LTC"],
+  stocksOfInterest: ["AAPL", "GOOGL"],
+  updateIntervalInSeconds: 10
+});
+
+async function start() {
+  await crypto_price_checker.start();
+
+  // Prices are now available
+  let c = crypto_price_checker.getPrice("AAPL");
+  crypto_price_checker.log("AAPL: ", c);
+}
+
+start();
 ```
 
 # Other options
@@ -56,6 +78,12 @@ var stock_crypto_monitor = require("stock-crypto-monitor")({
   cryptosOfInterest: [`BTC`, `ETH`, `LTC`],
   stocksOfInterest: ["AAPL", "GOOGL"],
   updateIntervalInSeconds: 10,
-  printIntervalInSeconds: 5
+  printIntervalInSeconds: 5,
+  printStatus: true,
+  updateStatusBar: true
 });
 ```
+
+# Logger
+
+The logger used in this package is available separately in [log-with-statusbar](https://www.npmjs.com/package/log-with-statusbar) npm package

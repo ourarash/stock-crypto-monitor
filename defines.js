@@ -11,6 +11,8 @@ Globals = {
     stocksOfInterest: ['AAPL', 'GOOGL'],
     updateIntervalInSeconds: 10,
     printIntervalInSeconds:5,
+    printStatus: true,
+    updateStatusBar:true,
     // control
     enable: true // Used for start/stop
   },

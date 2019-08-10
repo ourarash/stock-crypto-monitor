@@ -1,6 +1,6 @@
 {
   "name": "stock-crypto-monitor",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Continuously monitors cryptocurrency and stock prices",
   "main": "index.js",
   "scripts": {
