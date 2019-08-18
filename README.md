@@ -32,7 +32,7 @@ npm install stock-crypto-monitor --save
 
 ## Termux (Android)
 
-![Termux](https://raw.githubusercontent.com/ourarash/stock-crypto-monitor/master/termux_screenshot2.gif)
+![Termux](https://raw.githubusercontent.com/ourarash/stock-crypto-monitor/master/termux_screenshot.gif)
 
 # Usage
 
