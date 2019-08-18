@@ -159,7 +159,8 @@ function isString(value) {
  */
 async function yahooLookup(symbol, range = "4m") {
   let json = await getJson(
-    `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?region=US&lang=en-US&includePrePost=false&interval=2m&range=${range}`
+    `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?region=US&lang=en-US&includePrePost=false&interval=2m&range=${range}&corsDomain=finance.yahoo.com&.tsrc=finance`
+  //  ` https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?region=US&lang=en-US&includePrePost=false&interval=2m&range=1d&corsDomain=finance.yahoo.com&.tsrc=finance`
   );
 
   if (!validChain(json, "chart", "result")) {
