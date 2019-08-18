@@ -336,7 +336,7 @@ async function printStatus() {
 
   data.push([
     `${data.length}`, // Number
-    `Total Market Cap`[color].bright, // Symbol
+    `MKTCP`[color].bright, // Symbol
     `${mktCapFormatted[color]} ${pricePostFix[color]}`
   ]);
   let output = table(data, options);

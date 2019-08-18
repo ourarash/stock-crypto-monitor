@@ -160,6 +160,8 @@ async function yahooLookup(symbol, range = "4m") {
   let json = await getJson(
     `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?region=US&lang=en-US&includePrePost=false&interval=2m&range=${range}&corsDomain=finance.yahoo.com&.tsrc=finance`
   //  ` https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?region=US&lang=en-US&includePrePost=false&interval=2m&range=1d&corsDomain=finance.yahoo.com&.tsrc=finance`
+  
+  // https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?symbol=%5EVIX&period1=1549699200&period2=1566160052&interval=1d&includePrePost=true&events=div%7Csplit%7Cearn&lang=en-US&region=US&crumb=gDVn%2FAbuJpu&corsDomain=finance.yahoo.com
   );
 
   if (!validChain(json, "chart", "result")) {

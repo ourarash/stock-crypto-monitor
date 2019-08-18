@@ -8,8 +8,7 @@ show the price of cryptocurrencies in the notification area.
 See [examples/termux.js](examples/termux.js)
 
 [![NPM](https://badge.fury.io/js/stock-crypto-monitor.svg)](https://www.npmjs.com/package/stock-crypto-monitor)
-
-<!-- [![NPM Downloads][downloadst-image]][downloads-url] -->
+[![NPM Downloads][downloadst-image]][downloads-url]
 
 [downloads-image]: https://img.shields.io/npm/dm/stock-crypto-monitor.svg
 [downloadst-image]: https://img.shields.io/npm/dt/stock-crypto-monitor.svg
