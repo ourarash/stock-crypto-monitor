@@ -45,7 +45,6 @@ function validChain(object, ...keys) {
  * @param  {...any} keys
  */
 function createChain(object, ...keys) {
-  // console.log('keys: ', JSON.stringify(keys));
   if (!object) return false;
   if (!keys || !keys.length) {
     return;

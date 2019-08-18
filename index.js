@@ -317,7 +317,6 @@ async function printStatus() {
      * @return {boolean}
      */
     drawHorizontalLine: (index, size) => {
-      // console.log.info('index: ', JSON.stringify(index));
       // return tableHorizontalLines.indexOf(index) < 0;
       return true;
     }
@@ -327,7 +326,6 @@ async function printStatus() {
   let mktCapFormatted = defines.Globals.globalData.total_market_cap
     ? numeral(defines.Globals.globalData.total_market_cap.usd).format("0.00 a")
     : "0 ";
-  console.log("mktCapFormatted: ", JSON.stringify(mktCapFormatted));
   let pricePostFix = /\S+\s+(.*)/.exec(mktCapFormatted);
 
   pricePostFix = pricePostFix[1].toUpperCase();
@@ -369,7 +367,7 @@ async function printStatus() {
       c.bright
     }: ${btcPriceFormatted} (${changes.percentChangeFormatted})`;
     notificationOutputRaw += `${c}: ${btcPriceFormatted} (${changes.percentChangeFormatted})`;
-    linLength += `${c}: ${btcPriceFormatted}`.length;
+    linLength += `${c}: ${btcPriceFormatted} (${changes.percentChangeFormatted})`.length;
 
     if (i < stockAndCryptosOfInterest.length - 1) {
       notificationOutput += `, `;
