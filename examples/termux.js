@@ -57,8 +57,8 @@ async function updateNotification() {
     btcPrice <= 0 ? "N/A" : utility_functions.formatPrice(btcPrice);
   let title =
     frames[g_updateCounter % frames.length].toString() +
-    `BTC: ${btcPriceFormatted} MKTCP:${g_mktCapFormatted}`;
-    
+    `BTC: ${btcPriceFormatted} ${g_mktCapFormatted}`;
+
   if (g_notificationOutput && g_mktCapFormatted && api.hasTermux) {
     api
       .notification()
