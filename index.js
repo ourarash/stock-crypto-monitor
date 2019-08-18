@@ -7,7 +7,6 @@ const api = require("termux");
 require("ansicolor").nice;
 const CoinGecko = require("coingecko-api");
 const CoinGeckoClient = new CoinGecko();
-const yahoo = require("yahoo-stocks");
 
 const numeral = require("numeral");
 const currencyFormatter = require("currency-formatter");
@@ -31,13 +30,13 @@ async function getGlobalMarketData() {
   defines.Globals.globalData = data.data.data;
   log.info("Updated CoinGecko global market data!");
 }
+
 //-----------------------------------------------------------------------------
 async function getStockPricesFromYahoo() {
   log.info("Getting Stock prices from Yahoo...");
   for (stock of defines.Globals.options.stocksOfInterest) {
     try {
-      let res = await yahoo.lookup(stock);
-
+      let res = await utility_functions.yahooLookup(stock);
       defines.Globals.stockPrices[stock] = res;
       await utility_functions.sleep(100);
     } catch (error) {
@@ -194,9 +193,28 @@ function getPrice(c) {
     ); // coinGecko;
   } else {
     return defines.Globals.stockPrices[c.toUpperCase()]
-      ? defines.Globals.stockPrices[c.toUpperCase()].currentPrice
+      ? defines.Globals.stockPrices[c.toUpperCase()].currentPrice ||
+          defines.Globals.stockPrices[c.toUpperCase()].regularMarketPrice
       : 0;
   }
+}
+//-----------------------------------------------------------------------------
+function getChange(c) {
+  let result = {};
+  if (Object.keys(defines.Globals.cryptoPrices).includes(c)) {
+    let obj = defines.Globals.cryptoPrices[c.toUpperCase()];
+    if (obj) {
+      result["price_change_24h"] = obj.price_change_24h;
+      result["price_change_percentage_24h"] = obj.price_change_percentage_24h;
+    }
+  } else {
+    let obj = defines.Globals.stockPrices[c.toUpperCase()];
+    if (obj) {
+      result["price_change_24h"] = obj.price_change_24h;
+      result["price_change_percentage_24h"] = obj.price_change_percentage_24h;
+    }
+  }
+  return result;
 }
 //-----------------------------------------------------------------------------
 
@@ -215,6 +233,35 @@ async function updateStatusBar() {
   });
 
   log.setStatusBarText(filtered);
+}
+
+ function claculateChanges(k) {
+  let change = getChange(k);
+
+  let changeFormatted, percentChange, percentChangeFormatted, changeColor;
+  if (change) {
+    changeFormatted = utility_functions.formatPrice(change.price_change_24h);
+    percentChangeFormatted = utility_functions.formatNumber(
+      change.price_change_percentage_24h,
+      2
+    );
+    if (change.price_change_24h >= 0) {
+      changeFormatted = `+${changeFormatted}`;
+      percentChangeFormatted = `+${percentChangeFormatted}%`;
+
+      changeColor = "green";
+    } else {
+      changeFormatted = `-${changeFormatted}`;
+      percentChangeFormatted = `-${percentChangeFormatted}%`;
+      changeColor = "red";
+    }
+  }
+
+  return {
+    changeFormatted: changeFormatted,
+    percentChangeFormatted: percentChangeFormatted,
+    changeColor: changeColor
+  };
 }
 //-----------------------------------------------------------------------------
 /**
@@ -248,10 +295,17 @@ async function printStatus() {
     let cmcPriceFormatted =
       cmcPrice <= 0 ? "N/A".yellow : utility_functions.formatPrice(cmcPrice);
 
+    let changes = claculateChanges(k);
     data.push([
       `${data.length}`, // Number
       `${k}`[color].bright, // Symbol
-      `${cmcPriceFormatted[color]}`
+      `${cmcPriceFormatted[color]}` +
+        (changes.changeFormatted
+          ? " " +
+            `${changes.changeFormatted} (${changes.percentChangeFormatted})`[
+              changes.changeColor
+            ]
+          : ``)
     ]);
   }
 
@@ -309,9 +363,12 @@ async function printStatus() {
 
     let btcPriceFormatted =
       btcPrice <= 0 ? "N/A".yellow : utility_functions.formatPrice(btcPrice);
+    let changes = claculateChanges(c);
 
-    notificationOutput += `${c.bright}: ${btcPriceFormatted}`;
-    notificationOutputRaw += `${c}: ${btcPriceFormatted}`;
+    notificationOutput += `${
+      c.bright
+    }: ${btcPriceFormatted} ${changes.changeFormatted} (${changes.percentChangeFormatted})`;
+    notificationOutputRaw += `${c}: ${btcPriceFormatted} ${changes.changeFormatted} (${changes.percentChangeFormatted}`;
     linLength += `${c}: ${btcPriceFormatted}`.length;
 
     if (i < stockAndCryptosOfInterest.length - 1) {
@@ -457,3 +514,10 @@ module.exports = function(options = {}) {
     log: log
   };
 };
+
+// async function test() {
+//   let data = await utility_functions.yahooLookup("AAPL");
+//   console.log("data: ", JSON.stringify(data));
+// }
+
+// test();

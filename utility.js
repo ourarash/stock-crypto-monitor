@@ -1,6 +1,31 @@
 var defines = require("./defines");
+const https = require("https");
 
 const log = defines.log;
+
+const get = url =>
+  new Promise((resolve, reject) => {
+    const req = https.get(url, res => {
+      let data = "";
+      res.on("data", d => {
+        data += d;
+      });
+      res.on("end", () => {
+        resolve(data);
+      });
+    });
+    req.on("error", e => {
+      reject(e);
+    });
+  });
+
+const getJson = url =>
+  new Promise((resolve, reject) => {
+    get(url)
+      .then(resp => JSON.parse(resp))
+      .then(resolve)
+      .catch(reject);
+  });
 
 //-----------------------------------------------------------------------------
 /**
@@ -125,6 +150,42 @@ function hashCode(stringValue) {
 function isString(value) {
   return typeof value === "string" || value instanceof String;
 }
+//-----------------------------------------------------------------------------
+/**
+ * Looks up yahoo price. The stock price is in the meta part of the respond
+ * Therefore a short range (4m) is enough
+ * @param {String} symbol
+ * @param {String} range
+ */
+async function yahooLookup(symbol, range = "4m") {
+  let json = await getJson(
+    `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?region=US&lang=en-US&includePrePost=false&interval=2m&range=${range}`
+  );
+
+  if (!validChain(json, "chart", "result")) {
+    return;
+  }
+
+  let result;
+  try {
+    let regularMarketPrice = json.chart.result[0].meta.regularMarketPrice;
+    let previousClose = json.chart.result[0].meta.previousClose;
+    let change = regularMarketPrice - previousClose;
+    let percentChange =
+      ((regularMarketPrice - previousClose) / previousClose) *
+      100;
+    result = {
+      regularMarketPrice: regularMarketPrice,
+      previousClose: previousClose,
+      price_change_24h: change,
+      price_change_percentage_24h: percentChange
+    };
+  } catch (error) {
+    log.error(error);
+  }
+
+  return result;
+}
 
 //-----------------------------------------------------------------------------
 var exports = (module.exports = {
@@ -134,6 +195,8 @@ var exports = (module.exports = {
   removeUndefinedFromObject: removeUndefinedFromObject,
   sleep: sleep,
   formatPrice: formatPrice,
+  formatNumber: formatNumber,
   hashCode: hashCode,
   isString: isString,
+  yahooLookup: yahooLookup
 });

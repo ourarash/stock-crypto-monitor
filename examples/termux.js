@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * stock-cryptoa-monitor: Termux example
  * Continuously monitor cryptocurrency prices
  * Written by Ari Saif
@@ -23,7 +23,7 @@ if (!api.hasTermux) {
 }
 var g_notification_id = 1;
 var g_notificationOutput, g_mktCapFormatted;
-var g_updateCounter = 0 ;
+var g_updateCounter = 0;
 //-----------------------------------------------------------------------------
 /**
  * A function that is called in the beginning
@@ -49,22 +49,17 @@ async function updateValuesCallback(notificationOutput, mktCapFormatted) {
  */
 async function updateNotification() {
   g_updateCounter++;
-  
+
   // Set the animation frame
   let frames = spinners.moon.frames;
-  if (
-    
-    g_notificationOutput &&
-    g_mktCapFormatted &&
-    api.hasTermux
-  ) {
+  if (g_notificationOutput && g_mktCapFormatted && api.hasTermux) {
     api
       .notification()
-      .content(g_notificationOutput)
+      .content(moment().format("h:mm") + `: ` + g_notificationOutput + ", " + g_mktCapFormatted)
       .id(g_notification_id)
       .title(
-        frames[g_updateCounter % frames.length].toString() +
-        moment().format("h:mm") + `: ` + g_mktCapFormatted)
+        frames[g_updateCounter % frames.length].toString() + g_mktCapFormatted
+      )
       //  .url('...')
       .run();
   }
