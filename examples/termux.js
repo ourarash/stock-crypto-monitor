@@ -52,14 +52,25 @@ async function updateNotification() {
 
   // Set the animation frame
   let frames = spinners.moon.frames;
+  let btcPrice = crypto_price_checker.getPrice("BTC");
+  let btcPriceFormatted =
+    btcPrice <= 0 ? "N/A" : utility_functions.formatPrice(btcPrice);
+  let title =
+    frames[g_updateCounter % frames.length].toString() +
+    `BTC: ${btcPriceFormatted} MKTCP:${g_mktCapFormatted}`;
+    
   if (g_notificationOutput && g_mktCapFormatted && api.hasTermux) {
     api
       .notification()
-      .content(moment().format("h:mm") + `: ` + g_notificationOutput + ", " + g_mktCapFormatted)
-      .id(g_notification_id)
-      .title(
-        frames[g_updateCounter % frames.length].toString() + g_mktCapFormatted
+      .content(
+        moment().format("h:mm") +
+          `: ` +
+          g_notificationOutput +
+          ", " +
+          g_mktCapFormatted
       )
+      .id(g_notification_id)
+      .title(title)
       //  .url('...')
       .run();
   }

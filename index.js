@@ -367,8 +367,8 @@ async function printStatus() {
 
     notificationOutput += `${
       c.bright
-    }: ${btcPriceFormatted} ${changes.changeFormatted} (${changes.percentChangeFormatted})`;
-    notificationOutputRaw += `${c}: ${btcPriceFormatted} ${changes.changeFormatted} (${changes.percentChangeFormatted}`;
+    }: ${btcPriceFormatted} (${changes.percentChangeFormatted})`;
+    notificationOutputRaw += `${c}: ${btcPriceFormatted} (${changes.percentChangeFormatted})`;
     linLength += `${c}: ${btcPriceFormatted}`.length;
 
     if (i < stockAndCryptosOfInterest.length - 1) {
@@ -514,10 +514,3 @@ module.exports = function(options = {}) {
     log: log
   };
 };
-
-// async function test() {
-//   let data = await utility_functions.yahooLookup("AAPL");
-//   console.log("data: ", JSON.stringify(data));
-// }
-
-// test();
