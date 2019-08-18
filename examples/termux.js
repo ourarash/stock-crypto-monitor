@@ -62,7 +62,7 @@ async function updateNotification() {
   if (g_notificationOutput && g_mktCapFormatted && api.hasTermux) {
     api
       .notification()
-      .content(g_notificationOutput + moment().format("h:mm A"))
+      .content(g_notificationOutput + " | " +  moment().format("h:mm A"))
       .id(g_notification_id)
       .title(title)
       //  .url('...')
