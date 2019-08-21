@@ -251,8 +251,8 @@ async function updateStatusBar() {
 
       changeColor = "green";
     } else {
-      changeFormatted = `-${changeFormatted}`;
-      percentChangeFormatted = `-${percentChangeFormatted}%`;
+      changeFormatted = `${changeFormatted}`;
+      percentChangeFormatted = `${percentChangeFormatted}%`;
       changeColor = "red";
     }
   }
