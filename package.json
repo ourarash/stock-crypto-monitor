@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ourarash/stock-cryptoa-monitor.git"
+    "url": "git+https://github.com/ourarash/stock-crypto-monitor.git"
   },
   "keywords": [
     "crypto",
@@ -25,9 +25,9 @@
   "author": "Ari Saif",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ourarash/stock-cryptoa-monitor/issues"
+    "url": "https://github.com/ourarash/stock-crypto-monitor/issues"
   },
-  "homepage": "https://github.com/ourarash/stock-cryptoa-monitor#readme",
+  "homepage": "https://github.com/ourarash/stock-crypto-monitor#readme",
   "dependencies": {
     "ansicolor": "^1.1.92",
     "coingecko-api": "^1.0.5",
