@@ -247,12 +247,12 @@ async function updateStatusBar() {
     );
     if (change.price_change_24h >= 0) {
       changeFormatted = `+${changeFormatted}`;
-      percentChangeFormatted = `+${percentChangeFormatted}%`;
+      percentChangeFormatted = `🍏+${percentChangeFormatted}%`;
 
       changeColor = "green";
     } else {
       changeFormatted = `${changeFormatted}`;
-      percentChangeFormatted = `${percentChangeFormatted}%`;
+      percentChangeFormatted = `🍎${percentChangeFormatted}%`;
       changeColor = "red";
     }
   }

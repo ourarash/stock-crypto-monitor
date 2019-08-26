@@ -1,4 +1,4 @@
 node ~/github/stock-crypto-monitor/examples/termux.js --updateIntervalInSeconds=50 \
 --cryptosOfInterest="BTC,ETH,LTC" \
---stocksOfInterest="GOOGL,AMZN,GO,AAPL,^DJI,^GSPC" 
+--stocksOfInterest="GOOGL,AMZN,GO,AAPL,^DJI,^GSPC,TVIX" 
 
